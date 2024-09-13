@@ -1,5 +1,5 @@
 
-# YouTube Content Analytics Platform
+# YouTube Content Analytics Platform - TubeGenius by AngelGaitanG
 
 This repository contains the source code for a YouTube Content Analytics Platform. The platform allows users to analyze personalized YouTube video content using advanced metrics and visualizations.
 
