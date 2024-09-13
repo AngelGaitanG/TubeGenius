@@ -1,26 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { CreateYoutubeDto } from './dto/create-youtube.dto';
-import { UpdateYoutubeDto } from './dto/update-youtube.dto';
+import { configDotenv } from 'dotenv';
+import { google } from 'googleapis';
+configDotenv({ path: '.env.development' });
 
+ 
 @Injectable()
 export class YoutubeService {
-  create(createYoutubeDto: CreateYoutubeDto) {
-    return ` This action adds a new youtube ${createYoutubeDto}`;
-  }
+    
+      private youtube = google.youtube('v3');
+      private apiKey = process.env.YOUTUBE_API_KEY;
 
-  findAll() {
-    return `This action returns all youtube`;
-  }
 
-  findOne(id: number) {
-    return `This action returns a #${id} youtube`;
-  }
+    async getVideoStatistics(videoId: string) {
+      const response = await this.youtube.videos.list({
+        part: ['statistics', 'snippet', 'topicDetails', 'contentDetails', 'status'],
+        id: [videoId],
+        key: this.apiKey
+      });
+      return response.data.items;
+    }
 
-  update(id: number, updateYoutubeDto: UpdateYoutubeDto) {
-    return `This action updates a #${id} youtube, ${updateYoutubeDto}`;
-  }
 
-  remove(id: number) {
-    return `This action removes a #${id} youtube`;
-  }
 }
